@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GunnerData : MonoBehaviour
+public class Player_Gunner : MonoBehaviour
 {
     private int _level;
     private float _baseDmg;
@@ -14,13 +14,13 @@ public class GunnerData : MonoBehaviour
     private float _exp;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void Initialize(PlayerStatData statData)
     {
