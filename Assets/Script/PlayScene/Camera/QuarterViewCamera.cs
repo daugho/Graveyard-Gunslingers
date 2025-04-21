@@ -1,0 +1,23 @@
+using UnityEngine;
+
+public class QuarterViewCamera : MonoBehaviour
+{
+    public Transform target;
+    public Vector3 offset = new Vector3(0, 10, -10);
+    public float followSpeed = 5f;
+
+    void Update()
+    {
+        if (target == null) return;
+
+        Vector3 desiredPosition = target.position + offset;
+        Debug.Log("Player position : " + target.position);
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
+        transform.LookAt(target);
+    }
+
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
+}
