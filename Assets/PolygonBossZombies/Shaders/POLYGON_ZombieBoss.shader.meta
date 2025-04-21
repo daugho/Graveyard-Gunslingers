@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7da0653685886a444b680e84047d026e
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 173373
+  packageName: POLYGON Boss Zombies - Low Poly 3D Art by Synty
+  packageVersion: 1.03
+  assetPath: Assets/PolygonBossZombies/Shaders/POLYGON_ZombieBoss.shader
+  uploadId: 620924
