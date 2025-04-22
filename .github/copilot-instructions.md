@@ -2,7 +2,7 @@
 - Project name: Graveyard-Gunslingers
 - Unity version: Unity 6000.0.32f1
 - Active game object:
-  - Name: Cartograph
-  - Tag: Untagged
+  - Name: Main Camera
+  - Tag: MainCamera
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

@@ -19,53 +19,57 @@ public class Gunner : Player
         if (Input.GetMouseButtonDown(1))
         {
             _isAiming = true;
-            _anim.SetLayerWeight(1, 1);
+            _anim.SetBool("OnAim", true);
+            
+            //_anim.SetLayerWeight(1, 1);
             //_anim.SetBool("IsAiming", true);
         }
         else if (Input.GetMouseButtonUp(1))
         {
             _isAiming = false;
-            _anim.SetLayerWeight(1, 0);
-           //_anim.SetBool("IsAiming", false);
-        }
-    }
-    private void RotateToMouse()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            _anim.SetBool("OnAim", false);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayer))
-        {
-            Vector3 targetPos = hit.point;
-            targetPos.y = transform.position.y; // y 고정해서 수평 회전만
-
-            Vector3 dir = (targetPos - transform.position).normalized;
-
-            if (dir != Vector3.zero)
-            {
-                Quaternion lookRot = Quaternion.LookRotation(dir);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, lookRot, _playerRotateSpeed * Time.deltaTime);
-            }
+            //_anim.SetLayerWeight(1, 0);
+            //_anim.SetBool("IsAiming", false);
         }
     }
     protected override void HandleMovement()
     {
-        _anim.SetFloat("Speed", 0);
-        Vector3 inputDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        Vector3 inputRaw = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));//월드 좌표 d를 누르면 1,0,0 , 입력방향을 가져옴
 
-        bool isSprinting = Input.GetKey(KeyCode.LeftShift);
-        float speed = isSprinting ? _playerMoveSpeed * 3.0f : _playerMoveSpeed;
-
-        if (inputDir.sqrMagnitude > 0.01f)
+        if (inputRaw.sqrMagnitude > 0.01f)
         {
-            transform.Translate(inputDir.normalized * speed * Time.deltaTime, Space.World);
+            Vector3 moveDir = inputRaw.normalized;
+
+            float speed = Input.GetKey(KeyCode.LeftShift) ? _playerMoveSpeed * 3.0f : _playerMoveSpeed;
+            transform.Translate(moveDir * speed * Time.deltaTime, Space.World);
+
+            Vector3 localDir = transform.InverseTransformDirection(moveDir);//월드 기준 방향(worldDir) → 이 오브젝트 기준의 방향(localDir)으로 바꿔줌
+            _anim.SetFloat("Horizontal", localDir.z);
+            _anim.SetFloat("Vertical", localDir.x);
             _anim.SetFloat("Speed", speed);
         }
         else
         {
+            _anim.SetFloat("Horizontal", 0);
+            _anim.SetFloat("Vertical", 0);
             _anim.SetFloat("Speed", 0);
         }
-
-
+        //_anim.SetFloat("Speed", 0);
+        //Vector3 inputDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        //
+        //bool isSprinting = Input.GetKey(KeyCode.LeftShift);
+        //float speed = isSprinting ? _playerMoveSpeed * 3.0f : _playerMoveSpeed;
+        //
+        //if (inputDir.sqrMagnitude > 0.01f)
+        //{
+        //    transform.Translate(inputDir.normalized * speed * Time.deltaTime, Space.World);
+        //    _anim.SetFloat("Speed", speed);
+        //}
+        //else
+        //{
+        //    _anim.SetFloat("Speed", 0);
+        //}
     }
     private void HandleRotation()
     {

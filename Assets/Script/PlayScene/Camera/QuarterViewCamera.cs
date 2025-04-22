@@ -11,7 +11,6 @@ public class QuarterViewCamera : MonoBehaviour
         if (target == null) return;
 
         Vector3 desiredPosition = target.position + offset;
-        Debug.Log("Player position : " + target.position);
         transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
         transform.LookAt(target);
     }
