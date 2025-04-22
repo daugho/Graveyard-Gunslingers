@@ -3,7 +3,7 @@ using System.IO;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public struct PlayerStatData
+public class PlayerStatData
 {
     public int Key;
     public string Name;
@@ -89,7 +89,6 @@ public class PlayerStatManager
             if (levelDict.TryGetValue(level, out var data))
                 return data;
         }
-
         Debug.LogWarning($"[PlayerStatManager] {type}의 {level}레벨 데이터 없음");
         return default;
     }
