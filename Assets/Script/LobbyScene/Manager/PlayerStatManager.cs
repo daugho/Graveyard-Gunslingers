@@ -18,7 +18,7 @@ public class PlayerStatData
     public float AttackSpeed;
     public float Exp;
 }
-public class PlayerStatManager
+public class PlayerStatManager : MonoBehaviour
 {
     private static PlayerStatManager _instance;
     public static PlayerStatManager Instance => _instance ??= new PlayerStatManager();
@@ -40,7 +40,8 @@ public class PlayerStatManager
 
     private void LoadCharacterData(CharacterType type)
     {
-        string path = $"Data/{type.ToString().ToLower()}";
+        string path = $"Data/PlayerData/{type.ToString().ToLower()}";
+        Debug.Log($"[PlayerStatManager] CSV 로드 시도 경로: {path}");
 
         TextAsset csv = Resources.Load<TextAsset>(path);
         if (csv == null)
@@ -72,7 +73,8 @@ public class PlayerStatManager
                 Health = float.Parse(values[7]),
                 Mp = float.Parse(values[8]),
                 Speed = float.Parse(values[9]),
-                AttackSpeed = float.Parse(values[10])
+                AttackSpeed = float.Parse(values[10]),
+                Exp = float.Parse(values[11])
             };
 
             statByLevel[data.Level] = data;
@@ -92,4 +94,16 @@ public class PlayerStatManager
         Debug.LogWarning($"[PlayerStatManager] {type}의 {level}레벨 데이터 없음");
         return default;
     }
+    public PlayerStats GetPlayerStats(CharacterType type, int level)
+    {
+        var data = GetStat(type, level);
+        if (data.Equals(default(PlayerStatData)))
+        {
+            Debug.LogError($"[StatManager] {type} 레벨 {level} 데이터 없음!");
+            return null;
+        }
+
+        return new PlayerStats(data);
+    }
+
 }

@@ -2,16 +2,17 @@
 
 public class Gunner_Move : MonoBehaviour
 {
-    Animator _anim;
-    float _playerMoveSpeed = 2.0f;
+    float _playerbaseMoveSpeed = 2.0f;
     float _playerRotateSpeed = 12.0f;
     private bool _isAiming = false;
     public bool IsAiming => _isAiming;
     [SerializeField] private LayerMask groundLayer;
-
+    private Player_Gunner _playerGunner;
+    private Gunner_AnimatorController _animator;
     private void Awake()
     {
-        _anim = GetComponent<Animator>();
+        _animator = GetComponent<Gunner_AnimatorController>();
+        _playerGunner = GetComponent<Player_Gunner>();
     }
     void Update()
     {
@@ -24,7 +25,7 @@ public class Gunner_Move : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             _isAiming = true;
-            _anim.SetBool("OnAim", true);
+            _animator.SetAim(true);
             
             //_anim.SetLayerWeight(1, 1);
             //_anim.SetBool("IsAiming", true);
@@ -32,7 +33,7 @@ public class Gunner_Move : MonoBehaviour
         else if (Input.GetMouseButtonUp(1))
         {
             _isAiming = false;
-            _anim.SetBool("OnAim", false);
+            _animator.SetAim(false);
 
             //_anim.SetLayerWeight(1, 0);
             //_anim.SetBool("IsAiming", false);
@@ -45,20 +46,19 @@ public class Gunner_Move : MonoBehaviour
         if (inputRaw.sqrMagnitude > 0.01f)
         {
             Vector3 moveDir = inputRaw.normalized;
-
-            float speed = Input.GetKey(KeyCode.LeftShift) ? _playerMoveSpeed * 3.0f : _playerMoveSpeed;
+            float speedMultiplier = _playerGunner.Stats.Speed;
+            float moveSpeed = _playerbaseMoveSpeed * speedMultiplier;
+            float speed = (Input.GetKey(KeyCode.LeftShift) && (_isAiming==false)) ? moveSpeed * 3.0f : moveSpeed;
             transform.Translate(moveDir * speed * Time.deltaTime, Space.World);
 
             Vector3 localDir = transform.InverseTransformDirection(moveDir);//월드 기준 방향(worldDir) → 이 오브젝트 기준의 방향(localDir)으로 바꿔줌
-            _anim.SetFloat("Horizontal", localDir.z);//localDir.x ->localDir.z로 변경. 성공.
-            _anim.SetFloat("Vertical", localDir.x);
-            _anim.SetFloat("Speed", speed);
+            _animator.SetMovementDirection(localDir.z, localDir.x);//localDir.x ->localDir.z로 변경. 성공.
+            _animator.SetSpeed(speed);
         }
         else
         {
-            _anim.SetFloat("Horizontal", 0);
-            _anim.SetFloat("Vertical", 0);
-            _anim.SetFloat("Speed", 0);
+            _animator.SetMovementDirection(0, 0);
+            _animator.SetSpeed(0);
         }
     }
     private void HandleRotation()

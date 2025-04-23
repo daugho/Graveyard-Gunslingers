@@ -4,6 +4,10 @@ public class GameStartManager : MonoBehaviour
 {
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private GameObject testGunnerPrefab;
+    private void Awake()
+    {
+        PlayerStatManager.Instance.LoadAllCharacterData();
+    }
     void Start()
     {
 
@@ -20,11 +24,5 @@ public class GameStartManager : MonoBehaviour
             }
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

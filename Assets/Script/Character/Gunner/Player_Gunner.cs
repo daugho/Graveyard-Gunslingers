@@ -4,78 +4,36 @@ using UnityEngine.UI;
 using System.Collections;
 public class Player_Gunner : MonoBehaviour
 {
-    private int _level;
-    private float _baseDmg;
-    private float _rateDmg;
-    private float _luck;
-    private float _dex;
-    private float _hp;
-    private float _mp;
-    private float _speed;
-    private float _attackSpeed;
-    private float _exp;
-
-    ////////////////////////////
-
-    private float _finalDmg;
-    private float _curExp;
-    private int _currentLevel = 0;
-
-    private Slider _healthSlider;
-    private TextMeshProUGUI _expText;
+    private int _currentLevel = 1;
+    private PlayerStats _stats;
+    public PlayerStats Stats => _stats;
     private void Awake()
     {
-        InitializeFromStatManager();
-    }
-
-    private void InitializeFromStatManager()
-    {
-        var statData = PlayerStatManager.Instance.GetStat(CharacterType.Gunner, _level);
-        if (statData.Equals(default(PlayerStatData)))
+        _stats = PlayerStatManager.Instance.GetPlayerStats(CharacterType.Gunner, _currentLevel);
+        if (_stats == null)
         {
-            Debug.LogError("[Player_Gunner] 스탯 로드 실패!");
-            return;
+            Debug.LogError("스탯 로드 실패!");
         }
-
-        Initialize(statData);//처음 불러와서 한번 실행.
     }
 
-    public void Initialize(PlayerStatData statData)
-    {
-        _level = statData.Level;
-        _hp = statData.Health;
-        _baseDmg = statData.BaseDmg;
-        _rateDmg = statData.RateDmg;
-        _speed = statData.Speed;
-        _attackSpeed = statData.AttackSpeed;
-        _luck = statData.Luck;
-        _dex = statData.Dex;
-        _mp = statData.Mp;
-        _exp = statData.Exp;
-
-        Debug.Log($"[Gunner] Init 완료 → HP: {_hp}, Dmg: {_baseDmg}, Speed: {_speed}, AtkSpd: {_attackSpeed}");
-    }
+    //private void InitializeFromStatManager()
+    //{
+    //
+    //}
     public void LevelUp(int newLevel)
     {
-        var stat = PlayerStatManager.Instance.GetStat(CharacterType.Gunner, newLevel);
-        if (stat.Equals(default(PlayerStatData)))
+        var newStats = PlayerStatManager.Instance.GetPlayerStats(CharacterType.Gunner, newLevel);
+        if (newStats == null)
         {
             Debug.LogError("레벨업 스탯 로드 실패!");
             return;
         }
 
-        Initialize(stat); // 다시 초기화
-        Debug.Log($"[Gunner] 레벨업 → {newLevel}레벨로 스탯 갱신");
-    }
-    public void GetExp(float exp)
-    {
-        _curExp += exp;
-        if(_curExp>=_exp)
-        {
-            _currentLevel++;
-            _curExp %= _exp;
-        }
-        _expText.text = $"{(_curExp / _exp * 100f).ToString("F2")}%";
-        _healthSlider.value = _curExp / _exp;
+        _stats = newStats;
+        //_currentLevel = _stats.Level;
+
+        Debug.Log($"[Gunner] 레벨업 → {_stats.Level}레벨로 스탯 갱신 -> HP: {_stats.Health}, Dmg: {_stats.BaseDmg}, Speed: {_stats.Speed}, AtkSpd: {_stats.AttackSpeed}");
+
     }
 }
+
