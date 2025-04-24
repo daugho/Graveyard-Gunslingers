@@ -6,6 +6,7 @@ public class Gunner_Shoot : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] public Transform firePoint; 
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private RevolverUI revolverUI;
     private int maxAmmo = 6;
     private float reloadTime = 2.0f;
     Gunner_AnimatorController _anim;
@@ -18,6 +19,7 @@ public class Gunner_Shoot : MonoBehaviour
         currentAmmo = maxAmmo;
         _anim = GetComponent<Gunner_AnimatorController>();
         _move=GetComponent<Gunner_Move>();
+        revolverUI = GameObject.Find("Silinder").GetComponent<RevolverUI>();
     }
 
     void Update()
@@ -29,7 +31,8 @@ public class Gunner_Shoot : MonoBehaviour
         {
             if (currentAmmo > 0)
             {
-                FireBullet();
+                FireBullet(); // 실제 총알 발사 로직
+                revolverUI.Fire(); // UI 회전 및 비활성화
                 currentAmmo--;
             }
             else if(Input.GetKeyDown(KeyCode.R))
@@ -37,14 +40,14 @@ public class Gunner_Shoot : MonoBehaviour
                 isReloading = true;
                 //_anim.TriggerReload(); // 상체 트리거 + 무게 1
                 StartCoroutine(Reload());
-
+                revolverUI.ReloadAll();
             }
             else
             {
                 isReloading = true;
 
                 StartCoroutine(Reload());
-
+                revolverUI.ReloadAll();
             }
         }
     }
