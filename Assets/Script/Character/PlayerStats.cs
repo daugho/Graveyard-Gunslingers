@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class PlayerStats
 {
-    public int Level;
-    public float BaseDmg;
-    public float RateDmg;
-    public float Luck;
-    public float Dex;
-    public float Health;
-    public float Mp;
-    public float Speed;
-    public float AttackSpeed;
-    public float Exp;
+   public int Level;
+   public float BaseDmg;
+   public float RateDmg;
+   public float Luck;
+   public float Dex;
+   public float Health;
+   public float Mp;
+   public float Speed;
+   public float AttackSpeed;
+   public float Exp;
 
     public PlayerStats(PlayerStatData data)
     {
@@ -26,4 +26,5 @@ public class PlayerStats
         AttackSpeed = data.AttackSpeed;
         Exp = data.Exp;
     }
+
 }

@@ -1,0 +1,7 @@
+key,name,type,hp,movespeed,damage,range,defense,dropExp,dropGold,dropRate,TimeScaleFactor,DaeadScaleFactor,LimitScale,poolingscale,poolingscalemult
+1001,zombie,monster,10,2,10,1,1,10,10,,1.001,1.01,10,20,3
+1002,skull,monster,,,,,,,,,,,,,
+1003,,monster,,,,,,,,,,,,,
+1004,,monster,,,,,,,,,,,,,
+1005,,monster,,,,,,,,,,,,,
+1006,Spawner,monster,150000,0,0,0,100,,,,0,,,,

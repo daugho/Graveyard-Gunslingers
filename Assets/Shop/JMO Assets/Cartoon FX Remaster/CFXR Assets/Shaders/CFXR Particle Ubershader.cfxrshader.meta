@@ -206,9 +206,9 @@ ScriptedImporter:
   variantCountUsed: 8
 AssetOrigin:
   serializedVersion: 1
-  productId: 23634
-  packageName: Cartoon FX 4 Remaster
+  productId: 109565
+  packageName: Cartoon FX Remaster Free
   packageVersion: R 1.4.2
-  assetPath: Assets/JMO Assets/Cartoon FX Remaster/CFXR Assets/Shaders/CFXR Particle
-    Ubershader.cfxrshader
-  uploadId: 717885
+  assetPath: Assets/Shop/JMO Assets/Cartoon FX Remaster/CFXR Assets/Shaders/CFXR
+    Particle Ubershader.cfxrshader
+  uploadId: 717883

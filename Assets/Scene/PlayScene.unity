@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &82145198 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3051147017919939252, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
-  m_PrefabInstance: {fileID: 4305383363767737481}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,16 +240,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &275962078 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5091357335634855242, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
-  m_PrefabInstance: {fileID: 4305383363767737481}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &598466853 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3174755316644732188, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
-  m_PrefabInstance: {fileID: 4305383363767737481}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &653041956
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,21 +782,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3918179390815010196, guid: c63beef99ff605c4f8fa9a3b75279350, type: 3}
   poolSize: 20
---- !u!1 &1773847454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5305662391172038056, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
-  m_PrefabInstance: {fileID: 4305383363767737481}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1945628157 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5828611660338012332, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
-  m_PrefabInstance: {fileID: 4305383363767737481}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2017972916 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6503854490933927417, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
-  m_PrefabInstance: {fileID: 4305383363767737481}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2082880012 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 582769894130441065, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
@@ -834,14 +804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881853ce895f4d14d8e8898fcfa800b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cylinder: {fileID: 5210449868286084568, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
-  bulletSlots:
-  - {fileID: 598466853}
-  - {fileID: 275962078}
-  - {fileID: 1773847454}
-  - {fileID: 82145198}
-  - {fileID: 2017972916}
-  - {fileID: 1945628157}
+  cylinder: {fileID: 2082880013}
 --- !u!1001 &1022720265321226399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1137,7 +1100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5210449868286084568, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 132.1706
+      value: 132.17065
       objectReference: {fileID: 0}
     - target: {fileID: 5210449868286084568, guid: 6c2e23384240bfd46ab56855669c1747, type: 3}
       propertyPath: m_AnchoredPosition.y
