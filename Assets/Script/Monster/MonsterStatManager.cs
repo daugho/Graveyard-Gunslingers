@@ -1,12 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+public class MonsterData
+{
+    public int Key;
+    public string Name;
+    public string Type;
+    public float Hp;
+    public float MoveSpeed;
+    public float Damage;
+    public float Range;
+    public float Defense;
+    public int RateKey;
+}
 public class MonsterStatManager : MonoBehaviour
 {
     private static MonsterStatManager _instance;
     public static MonsterStatManager Instance => _instance ??= new MonsterStatManager();
 
-    private Dictionary<MonsterType, Dictionary<int, MonsterStatData>> _monsterStats = new();
+    private Dictionary<MonsterType, Dictionary<int, MonsterData>> _monsterStats = new();
 
     private MonsterStatManager() { }
 
@@ -31,41 +42,34 @@ public class MonsterStatManager : MonoBehaviour
             return;
         }
 
-        Dictionary<int, MonsterStatData> statByKey = new();
+        Dictionary<int, MonsterData> statByKey = new();
         string[] lines = csv.text.Split(new[] { "\r\n", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
 
         for (int i = 1; i < lines.Length; i++)
         {
             string[] values = lines[i].Split(',');
 
-            MonsterStatData data = new MonsterStatData
-            (
-             int.Parse(values[0]),  // key
-             values[1],             // name
-             values[2],             // type
-             float.Parse(values[3]),// hp
-             float.Parse(values[4]),// movespeed
-             float.Parse(values[5]),// damage
-             float.Parse(values[6]),// range
-             float.Parse(values[7]),// defense
-             int.Parse(values[8]),  // dropExp
-             int.Parse(values[9]),  // dropGold
-             float.Parse(values[10]),// dropRate
-             float.Parse(values[11]),// TimeScaleFactor
-             float.Parse(values[12]),// DeadScaleFactor
-             float.Parse(values[13]),// LimitScale
-             int.Parse(values[14]),  // poolingscale
-             int.Parse(values[15])   // poolingscalemult
-            );
+            MonsterData data = new MonsterData
+            {
+                Key = int.Parse(values[0]),
+                Name = values[1],
+                Type = values[2],
+                Hp = float.Parse(values[3]),
+                MoveSpeed = float.Parse(values[4]),
+                Damage = float.Parse(values[5]),
+                Range = float.Parse(values[6]),
+                Defense = float.Parse(values[7]),
+                RateKey = int.Parse(values[8])
+            };
 
-            statByKey[data.GetKey()] = data;
+            statByKey[data.Key] = data;
         }
 
         _monsterStats[type] = statByKey;
         Debug.Log($"[MonsterStatManager] {type} 데이터 {statByKey.Count}개 로드 완료");
     }
 
-    public MonsterStatData GetStat(MonsterType type, int key)
+    public MonsterData GetStat(MonsterType type, int key)
     {
         if (_monsterStats.TryGetValue(type, out var keyDict))
         {

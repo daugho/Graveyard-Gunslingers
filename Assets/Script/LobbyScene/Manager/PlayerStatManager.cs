@@ -94,7 +94,7 @@ public class PlayerStatManager : MonoBehaviour
         Debug.LogWarning($"[PlayerStatManager] {type}의 {level}레벨 데이터 없음");
         return default;
     }
-    public PlayerStats GetPlayerStats(CharacterType type, int level)
+    public StatManager.PlayerStats GetPlayerStats(CharacterType type, int level)
     {
         var data = GetStat(type, level);
         if (data.Equals(default(PlayerStatData)))
@@ -103,7 +103,7 @@ public class PlayerStatManager : MonoBehaviour
             return null;
         }
 
-        return new PlayerStats(data);
+        return new StatManager.PlayerStats(data);
     }
 
 }

@@ -46,7 +46,7 @@ public class Gunner_Move : MonoBehaviour
         if (inputRaw.sqrMagnitude > 0.01f)
         {
             Vector3 moveDir = inputRaw.normalized;
-            float speedMultiplier = _playerGunner.Stats.Speed;
+            float speedMultiplier = _playerGunner.Stats._speed;
             float moveSpeed = _playerbaseMoveSpeed * speedMultiplier;
             float speed = (Input.GetKey(KeyCode.LeftShift) && (_isAiming==false)) ? moveSpeed * 3.0f : moveSpeed;
             transform.Translate(moveDir * speed * Time.deltaTime, Space.World);

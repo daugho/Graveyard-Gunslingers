@@ -27,7 +27,7 @@ public class Gunner_HpExp : MonoBehaviour
             return;
         }
 
-        _maxHealth = _playerGunner.Stats.Health;
+        _maxHealth = _playerGunner.Stats._health;
         _currentHealth = _maxHealth;
         _curExp = 0;
 
@@ -121,16 +121,16 @@ public class Gunner_HpExp : MonoBehaviour
     public void GetExp(float exp)
     {
         _curExp += exp;
-        if (_curExp >= _playerGunner.Stats.Exp)
+        if (_curExp >= _playerGunner.Stats._exp)
         {
-            int nextLevel = _playerGunner.Stats.Level + 1;
+            int nextLevel = _playerGunner.Stats._level + 1;
             _playerGunner.LevelUp(nextLevel);
-            _curExp %= _playerGunner.Stats.Exp;
+            _curExp %= _playerGunner.Stats._exp;
             _curExp = 0;
         }
 
-        _expText.text = $"{(_curExp / _playerGunner.Stats.Exp * 100f):F2}%";
-        _expSlider.value = _curExp / _playerGunner.Stats.Exp;
+        _expText.text = $"{(_curExp / _playerGunner.Stats._exp * 100f):F2}%";
+        _expSlider.value = _curExp / _playerGunner.Stats._exp;
     }
 
     //private IEnumerator MakeRed()
