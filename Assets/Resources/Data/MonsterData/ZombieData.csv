@@ -1,6 +1,6 @@
 key,name,type,hp,movespeed,damage,range,defense,ratekey
 1001,zombiebasic,zombie,30,2,10,1,1,2001
-1002,zombie2,zombie,90,4,20,1,10,2002
+1002,zombie2,zombie,90,4,20,10,10,2002
 1003,zombie3,zombie,270,5,30,1,20,2003
 1004,zombie4,zombie,700,6,50,2,50,2004
 1011,skull,skull,20,2,5,1,5,2011

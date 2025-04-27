@@ -41,13 +41,14 @@ public class StatManager
         public float _speed { get; private set; }
         public float _damage { get; private set; }
         public float _defense { get; private set; }
-
+        public float _range { get; private set; } 
         public MonsterStats(MonsterData data)
         {
             _health = data.Hp;
             _speed = data.MoveSpeed;
             _damage = data.Damage;
             _defense = data.Defense;
+            _range = data.Range;
         }
 
         public float GetHealth() => _health;

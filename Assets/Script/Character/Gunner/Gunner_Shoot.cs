@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using static StatManager;
 
 public class Gunner_Shoot : MonoBehaviour
 {
@@ -13,13 +14,16 @@ public class Gunner_Shoot : MonoBehaviour
     private Gunner_Move _move;
     private int currentAmmo;
     private bool isReloading = false;
-
+    private float _playerDamage;
+    Player_Gunner _playerGunner;
     void Start()
     {
         currentAmmo = maxAmmo;
         _anim = GetComponent<Gunner_AnimatorController>();
         _move=GetComponent<Gunner_Move>();
         revolverUI = GameObject.Find("Silinder").GetComponent<RevolverUI>();
+        _playerGunner = GetComponent<Player_Gunner>();
+        _playerDamage = _playerGunner.Stats.GetDamage();
     }
 
     void Update()
@@ -76,7 +80,16 @@ public class Gunner_Shoot : MonoBehaviour
         {
             rb.linearVelocity = dir * 20f; // 원하는 속도로 날아가게
         }
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        if (bulletScript != null)
+        {
+            bulletScript.SetDamage(_playerDamage); // ⭐️ 그냥 저장된 값 사용
+        }
 
         Debug.DrawRay(firePoint.position, dir * 5f, Color.red, 2f); // 시각화 (선택)
+    }
+    public void UpdateDamage(float newDamage)
+    {
+        _playerDamage = newDamage;
     }
 }

@@ -33,7 +33,7 @@ public class MonsterStatManager : MonoBehaviour
 
     private void LoadMonsterData(MonsterType type)
     {
-        string path = $"Data/MonsterData/{type.ToString().ToLower()}";  // ¿¹: Resources/Data/MonsterData/goblin.csv
+        string path = $"Data/MonsterData/{type.ToString().ToLower()}Data";  // ¿¹: Resources/Data/MonsterData/ZombieData.csv
         TextAsset csv = Resources.Load<TextAsset>(path);
 
         if (csv == null)

@@ -5,7 +5,7 @@ using System.Collections;
 public class Player_Gunner : MonoBehaviour
 {
     private int _currentLevel = 1;
-    private StatManager.PlayerStats _stats; // ← 변경된 부분
+    private StatManager.PlayerStats _stats;
     public StatManager.PlayerStats Stats => _stats;
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class Player_Gunner : MonoBehaviour
         //_currentLevel = _stats.Level;
 
         Debug.Log($"[Gunner] 레벨업 → {_stats._level}레벨로 스탯 갱신 -> HP: {_stats._health}, Dmg: {_stats._baseDmg}, Speed: {_stats._speed}, AtkSpd: {_stats._attackSpeed}");
-
+        
     }
 }
 
