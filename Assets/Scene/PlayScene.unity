@@ -136,7 +136,7 @@ GameObject:
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &43625818
 BoxCollider:
@@ -348,6 +348,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &270218782
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1097999091557329613, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_Name
+      value: (P) Characters_Zombie_Pacient_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.273363
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 18.288597
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8375371682311612990, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6299819171965618105, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+    - {fileID: 5450976790074439541, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 98c51876b0a0bd2458e908b441accd5d, type: 3}
 --- !u!1 &653041956
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,7 +527,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &893466627
 BoxCollider:
@@ -729,6 +788,7 @@ GameObject:
   - component: {fileID: 1405149471}
   - component: {fileID: 1405149470}
   - component: {fileID: 1405149469}
+  - component: {fileID: 1405149473}
   m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
@@ -826,6 +886,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1405149473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405149468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: e01766fceb70bb941973211cc6326600, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1530948759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1144,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!65 &1973572953
 BoxCollider:
@@ -1549,3 +1641,4 @@ SceneRoots:
   - {fileID: 43625821}
   - {fileID: 1973572956}
   - {fileID: 893466630}
+  - {fileID: 270218782}
