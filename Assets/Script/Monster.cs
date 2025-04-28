@@ -78,3 +78,12 @@ public abstract class Monster : MonoBehaviour, IDamageable
         // 추적 종료할 때 실행 (Idle 애니메이션으로 변경)
     }
 }
+
+//private Ienumerator StopEffect
+//{
+//    time.timescale ( 0.01f)
+//    yield return new waitfersceond();
+//
+//    time.timescale ( 1.0f)
+//}
+//update에서 find 쓰지말것

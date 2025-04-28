@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using static StatManager;
-
+//행동트리
+//behavior 트리
 public class Gunner_Shoot : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab;
