@@ -34,14 +34,17 @@ public class PlayerStatManager : MonoBehaviour
         {
             LoadCharacterData(type);
         }
-
         Debug.Log($"[PlayerStatManager] 모든 캐릭터 데이터 로드 완료");
     }
 
     private void LoadCharacterData(CharacterType type)
     {
+<<<<<<< Updated upstream
         string path = $"Data/PlayerData/{type.ToString().ToLower()}";
         Debug.Log($"[PlayerStatManager] CSV 로드 시도 경로: {path}");
+=======
+        string path = $"Data/PlayerData/Player_Gunner.csv";
+>>>>>>> Stashed changes
 
         TextAsset csv = Resources.Load<TextAsset>(path);
         if (csv == null)
@@ -94,6 +97,7 @@ public class PlayerStatManager : MonoBehaviour
         Debug.LogWarning($"[PlayerStatManager] {type}의 {level}레벨 데이터 없음");
         return default;
     }
+<<<<<<< Updated upstream
     public StatManager.PlayerStats GetPlayerStats(CharacterType type, int level)
     {
         var data = GetStat(type, level);
@@ -106,4 +110,14 @@ public class PlayerStatManager : MonoBehaviour
         return new StatManager.PlayerStats(data);
     }
 
+=======
+    public PlayerStats GetPlayerStats(CharacterType type, int level)
+    {
+        var data = GetStat(type, level);
+        if (data.Equals(default(PlayerStatData)))
+            return null;
+
+        return new PlayerStats(data);
+    }
+>>>>>>> Stashed changes
 }

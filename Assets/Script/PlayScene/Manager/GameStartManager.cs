@@ -4,6 +4,7 @@ public class GameStartManager : MonoBehaviour
 {
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private GameObject testGunnerPrefab;
+<<<<<<< Updated upstream
     //[SerializeField] private GameObject testZombiePrefab;
     MonsterPoolManager _monsterPoolManager;
     private void Awake()
@@ -12,6 +13,11 @@ public class GameStartManager : MonoBehaviour
         MonsterStatManager.Instance.LoadAllMonsterData();
         SpawnDataManager.Instance.LoadSpawnData();
         _monsterPoolManager = MonsterPoolManager.Instance;
+=======
+    void Awake()
+    {
+        PlayerStatManager.Instance.LoadAllCharacterData(); // ?? ²À ÇÊ¿ä!
+>>>>>>> Stashed changes
     }
     void Start()
     {
