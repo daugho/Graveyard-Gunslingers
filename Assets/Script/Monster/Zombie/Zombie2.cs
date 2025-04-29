@@ -59,12 +59,17 @@ public class Zombie2 : Monster
 
         if (distance <= _attackRange)
         {
-            AttackAnim();
-            return;
+            AttackAnim();  // 공격 사거리 안에 들어오면 공격
+            _navMeshAgent.isStopped = true;  // 이동 멈춤
         }
         else
         {
-            base.Move();   // 이동 유지
+            Vector3 dir = (_target.position - transform.position).normalized; // 타겟 방향
+            Vector3 destination = _target.position - dir * _attackRange;      // 사거리만큼 물러난 목적지
+
+            _navMeshAgent.isStopped = false;
+            _navMeshAgent.SetDestination(destination);  // 사거리 유지 목적지로 이동
+
             _anim?.OnRun(); // 이동 애니메이션
         }
     }
@@ -114,6 +119,5 @@ public class Zombie2 : Monster
         {
             Move(); // 이동 계속
         }
-
     }
 }
