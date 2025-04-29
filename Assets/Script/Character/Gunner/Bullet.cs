@@ -40,5 +40,4 @@ public class Bullet : MonoBehaviour
     {
         BulletPool.Instance.ReturnBullet(gameObject);
     }
-    //ridigbody
 }

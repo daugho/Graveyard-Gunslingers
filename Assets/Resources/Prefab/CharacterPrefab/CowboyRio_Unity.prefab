@@ -427,7 +427,6 @@ PrefabInstance:
       addedObject: {fileID: -729338595880917844}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3ba5df55de38cf04d86504dab0da7464, type: 3}
       insertIndex: -1
-<<<<<<< Updated upstream
       addedObject: {fileID: -4223715582716827416}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3ba5df55de38cf04d86504dab0da7464, type: 3}
       insertIndex: -1
@@ -444,9 +443,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3ba5df55de38cf04d86504dab0da7464, type: 3}
       insertIndex: -1
       addedObject: {fileID: -2984670677584549879}
-=======
-      addedObject: {fileID: 2458879836863576876}
->>>>>>> Stashed changes
   m_SourcePrefab: {fileID: 100100000, guid: 3ba5df55de38cf04d86504dab0da7464, type: 3}
 --- !u!4 &7265645560920917122 stripped
 Transform:
@@ -473,7 +469,6 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-<<<<<<< Updated upstream
 --- !u!114 &-4223715582716827416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,9 +482,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &-5346433976030810620
-=======
---- !u!114 &2458879836863576876
->>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -501,7 +493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4838d6361a74f1f4dbf25c8b18d8b59d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
 --- !u!114 &6188882496637158273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,5 +571,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
-=======
->>>>>>> Stashed changes

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.AI;
 public abstract class Monster : MonoBehaviour, IDamageable
 {
     protected StatManager.MonsterStats _stats;
@@ -14,6 +15,15 @@ public abstract class Monster : MonoBehaviour, IDamageable
     protected float _attackRange = 2.0f;   // 공격 사거리
     protected float _attackCooldown = 2.0f;
     protected float _lastAttackTime = -999f;
+
+    protected NavMeshAgent _navMeshAgent;
+
+
+    private void Awake()
+    {
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+    }
+
     protected virtual void Start()
     {
         LoadMonsterStats();
@@ -31,8 +41,9 @@ public abstract class Monster : MonoBehaviour, IDamageable
     }
     protected virtual void Move()
     {
-        transform.LookAt(_target);
-        transform.Translate(Vector3.forward * _stats.GetMoveSpeed() * Time.deltaTime);
+        _navMeshAgent.destination = _target.position;
+        //transform.LookAt(_target);
+        //transform.Translate(Vector3.forward * _stats.GetMoveSpeed() * Time.deltaTime);
     }
     protected virtual void Attack()
     {
@@ -78,12 +89,3 @@ public abstract class Monster : MonoBehaviour, IDamageable
         // 추적 종료할 때 실행 (Idle 애니메이션으로 변경)
     }
 }
-
-//private Ienumerator StopEffect
-//{
-//    time.timescale ( 0.01f)
-//    yield return new waitfersceond();
-//
-//    time.timescale ( 1.0f)
-//}
-//update에서 find 쓰지말것
