@@ -12,21 +12,14 @@ public class Zombie2 : Monster
     {
         base.Start();
         _anim = GetComponent<MonsterAnimatorController>();
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+            _target = playerObj.transform;
     }
 
     protected override void Update()
     {
         if (_isAnimationPlaying)
-            return;
-
-        if (_target == null)
-        {
-            GameObject playerObj = GameObject.FindWithTag("Player");
-            if (playerObj != null)
-                _target = playerObj.transform;
-        }
-
-        if (_target == null || _stats == null)
             return;
 
         float distance = Vector3.Distance(transform.position, _target.position);

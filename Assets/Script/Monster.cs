@@ -73,6 +73,8 @@ public abstract class Monster : MonoBehaviour, IDamageable
     }
     protected virtual void Die()
     {
+        transform.position = Vector3.zero;   // 여기서 초기화
+        transform.localScale = Vector3.one;
         MonsterPoolManager.Instance.ReturnMonster(_monsterType, _monsterKey, gameObject);
     }
     protected virtual void OnDieAnimation()

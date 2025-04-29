@@ -1,5 +1,7 @@
 using UnityEngine;
 using Pathfinding;
+using System.Collections;
+
 public class Zombie1 : Monster
 {
     MonsterAnimatorController _anim;
@@ -8,23 +10,22 @@ public class Zombie1 : Monster
     private bool _isAnimationPlaying = false;
     private float _attackSpeed = 2.0f;
     FollowerEntity ai;
+    private Renderer[] _renderers;
 
     protected override void Start()
     {
         base.Start();
         _anim = GetComponent<MonsterAnimatorController>();
         _originalDetectRange = _detectRange;
+        _renderers = GetComponentsInChildren<Renderer>();
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj != null)
+            _target = playerObj.transform;
     }
     protected override void Update()
     {
         if (_isAnimationPlaying)
             return;
-        if (_target == null)
-        {
-            GameObject playerObj = GameObject.FindWithTag("Player");
-            if (playerObj != null)
-                _target = playerObj.transform;
-        }
         if (_target == null || _stats == null)
             return;
         float distance = Vector3.Distance(transform.position, _target.position);
@@ -106,6 +107,8 @@ public class Zombie1 : Monster
     {
         _isAnimationPlaying = true;
         _anim.Ondie();
+        transform.position = Vector3.zero;
+        transform.localScale = Vector3.one;
     }
 
     public override void TakeDamage(float damage)
@@ -113,6 +116,26 @@ public class Zombie1 : Monster
         base.TakeDamage(damage);
         _anim.OnHit();
         _isAnimationPlaying = true;
+        StartCoroutine(MakeRed());
+    }
+    private IEnumerator MakeRed()
+    {
+        MaterialPropertyBlock block = new MaterialPropertyBlock();
+        foreach (Renderer render in _renderers)
+        {
+            render.GetPropertyBlock(block);
+            block.SetColor("_BaseColor", Color.red);
+            render.SetPropertyBlock(block);
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        foreach (Renderer render in _renderers)
+        {
+            render.GetPropertyBlock(block);
+            block.SetColor("_BaseColor", Color.white);
+            render.SetPropertyBlock(block);
+        }
     }
     protected override void OnChaseStart()
     {
