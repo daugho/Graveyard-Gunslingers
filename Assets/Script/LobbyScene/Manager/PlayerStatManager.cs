@@ -18,7 +18,7 @@ public class PlayerStatData
     public float AttackSpeed;
     public float Exp;
 }
-public class PlayerStatManager : MonoBehaviour
+public class PlayerStatManager
 {
     private static PlayerStatManager _instance;
     public static PlayerStatManager Instance => _instance ??= new PlayerStatManager();

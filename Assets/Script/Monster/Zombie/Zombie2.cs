@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Zombie2 : Monster
@@ -5,9 +6,9 @@ public class Zombie2 : Monster
     private MonsterAnimatorController _anim;
     private bool _isAttacking = false;
     private bool _isAnimationPlaying = false;
+    private static GameObject _warningPrefab;
 
     [SerializeField] private LayerMask playerLayer;    // 타겟 레이어
-
     protected override void Start()
     {
         base.Start();
@@ -21,10 +22,12 @@ public class Zombie2 : Monster
     {
         if (_isAnimationPlaying)
             return;
+        if (_target == null || _stats == null)
+            return;
 
         float distance = Vector3.Distance(transform.position, _target.position);
 
-        if (distance <= _attackRange)
+        if (distance <= _attackRange && Time.time >= _lastAttackTime + _attackCooldown)
         {
             AttackAnim();
         }
@@ -45,16 +48,19 @@ public class Zombie2 : Monster
             _stats = new StatManager.MonsterStats(data);
             _monsterName = data.Name;
             _attackRange = data.Range;
-            Debug.Log($"[Zombie2] 스탯 로드 완료: {_monsterName}, 데미지 {_stats.GetDamage()}, 이동속도 {_stats.GetMoveSpeed()}");
+            //Debug.Log($"[Zombie2] 스탯 로드 완료: {_monsterName}, 데미지 {_stats.GetDamage()}, 이동속도 {_stats.GetMoveSpeed()}");
         }
         else
         {
-            Debug.LogError("[Zombie2] 스탯 로드 실패");
+           // Debug.LogError("[Zombie2] 스탯 로드 실패");
         }
     }
 
     protected override void Move()
     {
+        if (_target == null)
+            return;
+
         float distance = Vector3.Distance(transform.position, _target.position);
 
         if (distance <= _attackRange)
@@ -69,15 +75,14 @@ public class Zombie2 : Monster
 
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(destination);  // 사거리 유지 목적지로 이동
-
             _anim?.OnRun(); // 이동 애니메이션
         }
     }
-
     private void AttackAnim()
     {
         _isAnimationPlaying = true;
         _isAttacking = true;
+        _lastAttackTime = Time.time;
         _anim?.OnAttack();
         SpawnAttackEffect();
     }
@@ -86,13 +91,25 @@ public class Zombie2 : Monster
         base.TakeDamage(damage);
     }
     private void SpawnAttackEffect()
-    {
-        if (_target == null)
-            return;
+    {        
 
-        GameObject skillObject = EffectPool.Instance.GetEffect();
+        GameObject warning = EffectPool.Instance.GetWarningEffect();
         Vector3 spawnPosition = _target.position;
-        skillObject.transform.position = spawnPosition;
+        warning.transform.position = spawnPosition;
+        warning.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+        StartCoroutine(DelayedSkillSpawn(spawnPosition, warning));
+    }
+    private IEnumerator DelayedSkillSpawn(Vector3 position, GameObject warning)
+    {
+        yield return new WaitForSeconds(0.5f); // 경고 지속 시간
+
+        // 경고 이펙트 반환
+        if (warning != null)
+            EffectPool.Instance.ReturnWarningEffect(warning);
+
+        // 실제 공격 이펙트 소환
+        GameObject skillObject = EffectPool.Instance.GetEffect();
+        skillObject.transform.position = position;
         skillObject.transform.rotation = Quaternion.identity;
 
         Zombie2Skill skill = skillObject.GetComponent<Zombie2Skill>();
@@ -111,7 +128,7 @@ public class Zombie2 : Monster
         _isAnimationPlaying = false;
         float distance = Vector3.Distance(transform.position, _target.position);
 
-        if (distance <= _attackRange)
+        if (distance <= _attackRange && Time.time >= _lastAttackTime + _attackCooldown)
         {
             AttackAnim(); // 다시 공격
         }
@@ -119,5 +136,6 @@ public class Zombie2 : Monster
         {
             Move(); // 이동 계속
         }
+
     }
 }

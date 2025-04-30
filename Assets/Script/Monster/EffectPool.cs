@@ -8,7 +8,11 @@ public class EffectPool : MonoBehaviour
     [SerializeField] private GameObject effectPrefab;
     [SerializeField] private int poolSize = 10;
 
+    [SerializeField] private GameObject warningEffectPrefab;
+    [SerializeField] private int warningPoolSize = 10;
+
     private Queue<GameObject> pool = new Queue<GameObject>();
+    private Queue<GameObject> warningPool = new Queue<GameObject>();
 
     private void Awake()
     {
@@ -19,6 +23,12 @@ public class EffectPool : MonoBehaviour
             GameObject obj = Instantiate(effectPrefab, transform);
             obj.SetActive(false);
             pool.Enqueue(obj);
+        }
+        for (int i = 0; i < warningPoolSize; i++)
+        {
+            GameObject obj = Instantiate(warningEffectPrefab, transform);
+            obj.SetActive(false);
+            warningPool.Enqueue(obj);
         }
     }
 
@@ -41,5 +51,25 @@ public class EffectPool : MonoBehaviour
     {
         obj.SetActive(false);
         pool.Enqueue(obj);
+    }
+    public GameObject GetWarningEffect()
+    {
+        if (warningPool.Count > 0)
+        {
+            GameObject obj = warningPool.Dequeue();
+            obj.SetActive(true);
+            return obj;
+        }
+        else
+        {
+            GameObject obj = Instantiate(warningEffectPrefab, transform);
+            return obj;
+        }
+    }
+
+    public void ReturnWarningEffect(GameObject obj)
+    {
+        obj.SetActive(false);
+        warningPool.Enqueue(obj);
     }
 }

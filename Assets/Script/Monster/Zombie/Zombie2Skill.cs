@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Zombie2Skill : MonoBehaviour
@@ -9,7 +10,7 @@ public class Zombie2Skill : MonoBehaviour
     public void Initialize(float damage, float radius, LayerMask playerLayer)
     {
         _damage = damage;
-        _radius = radius;
+        _radius = 1.5f;
         _playerLayer = playerLayer;
 
         ActivateSkill();
@@ -27,5 +28,16 @@ public class Zombie2Skill : MonoBehaviour
                 Debug.Log($"[Zombie2Skill] 스킬 범위 내 플레이어에게 {_damage} 데미지 입힘!");
             }
         }
+        StartCoroutine(ReturnToPool());
+    }
+    private IEnumerator ReturnToPool()
+    {
+        yield return new WaitForSeconds(1.0f); // 이펙트 보이게 잠깐 유지
+        EffectPool.Instance.ReturnEffect(gameObject);
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 }

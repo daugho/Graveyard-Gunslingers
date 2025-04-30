@@ -1,7 +1,6 @@
 using UnityEngine;
 using Pathfinding;
-using System.Collections;
-
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 public class Zombie1 : Monster
 {
     MonsterAnimatorController _anim;
@@ -10,14 +9,12 @@ public class Zombie1 : Monster
     private bool _isAnimationPlaying = false;
     private float _attackSpeed = 2.0f;
     FollowerEntity ai;
-    private Renderer[] _renderers;
 
     protected override void Start()
     {
         base.Start();
         _anim = GetComponent<MonsterAnimatorController>();
         _originalDetectRange = _detectRange;
-        _renderers = GetComponentsInChildren<Renderer>();
         GameObject playerObj = GameObject.FindWithTag("Player");
         if (playerObj != null)
             _target = playerObj.transform;
@@ -29,28 +26,13 @@ public class Zombie1 : Monster
         if (_target == null || _stats == null)
             return;
         float distance = Vector3.Distance(transform.position, _target.position);
-
-        if (!_isChasing && distance <= _detectRange)
+        if (distance <= _attackRange)
         {
-            // 플레이어 감지 시작
-            _isChasing = true;
-            Debug.Log($"{_monsterName}이(가) 플레이어를 감지함");
+            AttackAnim(); // 사거리 내에 있으면 공격
         }
-
-        if (_isChasing)
+        else
         {
-            if (distance <= _attackRange)
-            {
-                AttackAnim();
-            }
-            else if (distance <= _detectRange)
-            {
-                Move();
-            }
-            else
-            {
-                _isChasing = false;
-            }
+            Move(); // 항상 추적
         }
     }
     protected override void LoadMonsterStats()
@@ -63,7 +45,7 @@ public class Zombie1 : Monster
         {
             _stats = new StatManager.MonsterStats(data);
             _monsterName = data.Name;
-            Debug.Log($"Zombie1:{_monsterName},{_stats._damage} , {_stats._speed} ");
+            Debug.Log($"Zombie1:{_monsterName},{_stats._damage} , {_stats._speed} ,{_stats._health},{_stats._defense}");
         }
         else
         {
@@ -74,27 +56,13 @@ public class Zombie1 : Monster
     {
         float distance = Vector3.Distance(transform.position, _target.position);
 
-        if (distance <= _attackRange)
-        {
-            AttackAnim();
-            return;
-        }
-        else if (distance <= _detectRange)
-        {
-            base.Move();   // 이동 유지
-            _anim?.OnRun(); // 이동 애니메이션
-        }
-        else
-        {
-            _isChasing = false;
-            _detectRange = _originalDetectRange; // 감지 범위 복구
-            _anim?.OnIdle();
-            Debug.Log($"{_monsterName}: 플레이어 놓침, Idle 상태로 복귀");
-        }
-    }
-    protected override void Attack()
-    { 
-        base.Attack();
+        if (_target == null) return;
+
+        Vector3 dir = (_target.position - transform.position).normalized;
+        transform.LookAt(_target);
+        transform.Translate(dir * _stats.GetMoveSpeed() * Time.deltaTime, Space.World);
+
+        _anim?.OnRun();
     }
     private void AttackAnim()
     {
@@ -107,8 +75,6 @@ public class Zombie1 : Monster
     {
         _isAnimationPlaying = true;
         _anim.Ondie();
-        transform.position = Vector3.zero;
-        transform.localScale = Vector3.one;
     }
 
     public override void TakeDamage(float damage)
@@ -116,26 +82,6 @@ public class Zombie1 : Monster
         base.TakeDamage(damage);
         _anim.OnHit();
         _isAnimationPlaying = true;
-        StartCoroutine(MakeRed());
-    }
-    private IEnumerator MakeRed()
-    {
-        MaterialPropertyBlock block = new MaterialPropertyBlock();
-        foreach (Renderer render in _renderers)
-        {
-            render.GetPropertyBlock(block);
-            block.SetColor("_BaseColor", Color.red);
-            render.SetPropertyBlock(block);
-        }
-
-        yield return new WaitForSeconds(0.1f);
-
-        foreach (Renderer render in _renderers)
-        {
-            render.GetPropertyBlock(block);
-            block.SetColor("_BaseColor", Color.white);
-            render.SetPropertyBlock(block);
-        }
     }
     protected override void OnChaseStart()
     {
@@ -157,18 +103,11 @@ public class Zombie1 : Monster
 
         if (distance <= _attackRange)
         {
-            AttackAnim(); // 다시 공격
-        }
-        else if (distance <= _detectRange)
-        {
-            Move(); // 이동 계속
+            AttackAnim(); // 사거리 내에 있으면 공격
         }
         else
         {
-            _isChasing = false;
-            _detectRange = _originalDetectRange;
-            _anim?.OnIdle(); // Idle 대기
-            Debug.Log($"{_monsterName}: 플레이어 놓쳐서 Idle로 전환");
+            Move(); // 항상 추적
         }
     }
 }

@@ -10,7 +10,6 @@ public class GameStartManager : MonoBehaviour
     {
         PlayerStatManager.Instance.LoadAllCharacterData();
         MonsterStatManager.Instance.LoadAllMonsterData();
-        SpawnDataManager.Instance.LoadSpawnData();
         _monsterPoolManager = MonsterPoolManager.Instance;
     }
     void Start()
@@ -18,8 +17,8 @@ public class GameStartManager : MonoBehaviour
         Vector3 spawnPosition1 = new Vector3(5, 0, 5);
         Vector3 spawnPosition2 = new Vector3(10, 0, 10);
 
-        MonsterPoolManager.Instance.SpawnMonster(MonsterType.Zombie, 1001, spawnPosition1, Quaternion.identity); // Zombie1
-        MonsterPoolManager.Instance.SpawnMonster(MonsterType.Zombie, 1002, spawnPosition1, Quaternion.identity); // Zombie1
+        //MonsterPoolManager.Instance.SpawnMonster(MonsterType.Zombie, 1001, spawnPosition1, Quaternion.identity); // Zombie1
+        //MonsterPoolManager.Instance.SpawnMonster(MonsterType.Zombie, 1002, spawnPosition1, Quaternion.identity); // Zombie1
 
         GameObject prefab = testGunnerPrefab;
         //GameObject prefab2 = testZombiePrefab;

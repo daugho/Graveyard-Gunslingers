@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 1528314179316281310}
   - component: {fileID: -2741408019168078519}
   - component: {fileID: 7634667486570670611}
-  - component: {fileID: 1288556203521141593}
+  - component: {fileID: -3186599933702779705}
   m_Layer: 6
   m_Name: SM_Chr_ZombieBoss_Wretch_01
   m_TagString: Monster
@@ -801,7 +801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ece558daa6e945468992cbb188dc2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!195 &1288556203521141593
+--- !u!195 &-3186599933702779705
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -811,7 +811,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
