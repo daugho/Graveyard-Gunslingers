@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: -8751485975322685383}
   - component: {fileID: -6272342981045150895}
   - component: {fileID: 936575491918874295}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,9 +107,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5580752031136720167}
     m_Modifications:
+    - target: {fileID: 1206991746821911745, guid: f1c24dc36b65de24ab16093f518a7397, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8585542772986347399, guid: f1c24dc36b65de24ab16093f518a7397, type: 3}
       propertyPath: m_Name
       value: SM_Bullet_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 8585542772986347399, guid: f1c24dc36b65de24ab16093f518a7397, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8854875397543708831, guid: f1c24dc36b65de24ab16093f518a7397, type: 3}
       propertyPath: m_LocalPosition.x
@@ -237,9 +245,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: CFXR4 Flamethrower
       objectReference: {fileID: 0}
+    - target: {fileID: 2053101587433184381, guid: 38fa03b9f83f85942a9ca809a73abe9b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2053101587928594100, guid: 38fa03b9f83f85942a9ca809a73abe9b, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053101587928594102, guid: 38fa03b9f83f85942a9ca809a73abe9b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2559290978850416604, guid: 38fa03b9f83f85942a9ca809a73abe9b, type: 3}
       propertyPath: m_Intensity
@@ -248,6 +264,14 @@ PrefabInstance:
     - target: {fileID: 3791188208434033719, guid: 38fa03b9f83f85942a9ca809a73abe9b, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5178828058208575709, guid: 38fa03b9f83f85942a9ca809a73abe9b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440689412707758209, guid: 38fa03b9f83f85942a9ca809a73abe9b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

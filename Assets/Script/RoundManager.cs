@@ -117,4 +117,9 @@ public class RoundManager : MonoBehaviour
             nextRoundButton.SetActive(true);
         }
     }
+
+    public int GetAliveMonsterCount()
+    {
+        return _aliveMonsterCount;
+    }
 }

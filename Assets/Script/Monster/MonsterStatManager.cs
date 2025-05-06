@@ -18,9 +18,6 @@ public class MonsterStatManager : MonoBehaviour
     public static MonsterStatManager Instance => _instance ??= new MonsterStatManager();
 
     private Dictionary<MonsterType, Dictionary<int, MonsterData>> _monsterStats = new();
-
-    private MonsterStatManager() { }
-
     public void LoadAllMonsterData()
     {
         foreach (MonsterType type in System.Enum.GetValues(typeof(MonsterType)))

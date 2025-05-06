@@ -13,8 +13,8 @@ public class Gunner_HpExp : MonoBehaviour, IDamageable
     private float _currentHealth;
     private float _curExp;
     private Renderer[] _renderers;
-    private RawImage _deathScreen;
-    private bool _isFadingOut = true;
+    //private RawImage _deathScreen;
+    //private bool _isFadingOut = true;
     private Player_Gunner _playerGunner;
 
     void Start()

@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MpPotion_Normal
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0ceaecaf1d3fb224bb08f0159137bee7, type: 3}
+      propertyPath: m_TagString
+      value: Item
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -78,6 +82,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0ceaecaf1d3fb224bb08f0159137bee7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8649155951527807869}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0ceaecaf1d3fb224bb08f0159137bee7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -9031303418318598514}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0ceaecaf1d3fb224bb08f0159137bee7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7246334729057191995}
   m_SourcePrefab: {fileID: 100100000, guid: 0ceaecaf1d3fb224bb08f0159137bee7, type: 3}
 --- !u!1 &8711128732226691098 stripped
 GameObject:
@@ -136,3 +146,39 @@ MonoBehaviour:
   isScaling: 0
   useEasingForScaling: 0
   scaleLerpSpeed: 1
+--- !u!135 &-9031303418318598514
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711128732226691098}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.1951361
+  m_Center: {x: 0, y: 0.00000017881393, z: 0}
+--- !u!114 &7246334729057191995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8711128732226691098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6d78a7db764534d9218e435acee433, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rateKey: 2001
+  itemType: 2
+  itemGrade: 0

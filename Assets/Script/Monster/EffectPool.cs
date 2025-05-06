@@ -5,71 +5,61 @@ public class EffectPool : MonoBehaviour
 {
     public static EffectPool Instance;
 
-    [SerializeField] private GameObject effectPrefab;
-    [SerializeField] private int poolSize = 10;
+    [System.Serializable]
+    public class EffectPoolItem
+    {
+        public string key;
+        public GameObject prefab;
+        public int poolSize = 10;
+    }
 
-    [SerializeField] private GameObject warningEffectPrefab;
-    [SerializeField] private int warningPoolSize = 10;
-
-    private Queue<GameObject> pool = new Queue<GameObject>();
-    private Queue<GameObject> warningPool = new Queue<GameObject>();
+    [SerializeField] private List<EffectPoolItem> effectPoolItems;
+    private Dictionary<string, Queue<GameObject>> _effectPools = new();
 
     private void Awake()
     {
         Instance = this;
 
-        for (int i = 0; i < poolSize; i++)
+        foreach (var item in effectPoolItems)
         {
-            GameObject obj = Instantiate(effectPrefab, transform);
-            obj.SetActive(false);
-            pool.Enqueue(obj);
-        }
-        for (int i = 0; i < warningPoolSize; i++)
-        {
-            GameObject obj = Instantiate(warningEffectPrefab, transform);
-            obj.SetActive(false);
-            warningPool.Enqueue(obj);
+            Queue<GameObject> queue = new();
+            for (int i = 0; i < item.poolSize; i++)
+            {
+                GameObject obj = Instantiate(item.prefab, transform);
+                obj.SetActive(false);
+                queue.Enqueue(obj);
+            }
+            _effectPools[item.key] = queue;
         }
     }
 
-    public GameObject GetEffect()
+    public GameObject GetEffect(string key)
     {
-        if (pool.Count > 0)
+        if (!_effectPools.ContainsKey(key))
         {
-            GameObject obj = pool.Dequeue();
+            Debug.LogWarning($"[EffectPool] '{key}' 키를 찾을 수 없음");
+            return null;
+        }
+
+        if (_effectPools[key].Count > 0)
+        {
+            var obj = _effectPools[key].Dequeue();
             obj.SetActive(true);
             return obj;
         }
         else
         {
-            GameObject obj = Instantiate(effectPrefab, transform);
-            return obj;
+            Debug.LogWarning($"[EffectPool] '{key}' 풀에 남은 오브젝트가 없음");
+            return null;
         }
     }
 
-    public void ReturnEffect(GameObject obj)
+    public void ReturnEffect(string key, GameObject obj)
     {
         obj.SetActive(false);
-        pool.Enqueue(obj);
-    }
-    public GameObject GetWarningEffect()
-    {
-        if (warningPool.Count > 0)
-        {
-            GameObject obj = warningPool.Dequeue();
-            obj.SetActive(true);
-            return obj;
-        }
+        if (_effectPools.ContainsKey(key))
+            _effectPools[key].Enqueue(obj);
         else
-        {
-            GameObject obj = Instantiate(warningEffectPrefab, transform);
-            return obj;
-        }
-    }
-
-    public void ReturnWarningEffect(GameObject obj)
-    {
-        obj.SetActive(false);
-        warningPool.Enqueue(obj);
+            Destroy(obj);
     }
 }
