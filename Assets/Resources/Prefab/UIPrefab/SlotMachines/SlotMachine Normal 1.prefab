@@ -5314,15 +5314,20 @@ MonoBehaviour:
   slotImages:
   - {fileID: 2994657738872564202}
   normalSprites:
-  - {fileID: 21300000, guid: 32334a1f57b34ee45b9ff622fcab7371, type: 3}
+  - {fileID: 21300000, guid: 3444229ba1c8ba84cbdd7306ab8f1e56, type: 3}
   - {fileID: 21300000, guid: 46b591d0b8cc9254084acc92251aa25f, type: 3}
   - {fileID: 21300000, guid: 7a49b32918496804788a6a0fa95b12c6, type: 3}
   - {fileID: 21300000, guid: 3444229ba1c8ba84cbdd7306ab8f1e56, type: 3}
   - {fileID: 21300000, guid: f1c8ed65090e4094180d694cdc2d0345, type: 3}
+  skillNames:
+  - ExploBullet
+  - ExploBullet
+  - ExploBullet
+  - ExploBullet
+  - ExploBullet
   stepCount: 10
   startDelay: 0.2
   endDelay: 0.5
-  rewardEffect: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
 --- !u!1 &8050574461981365446
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,9 +9,10 @@ public class Gunner_grenade : MonoBehaviour
     [SerializeField] private GameObject arrowIndicator;
     [SerializeField] private int segmentCount = 20;
 
-    private bool isAiming = false;
-    private GameObject warningEffect;
-    private Vector3 currentVelocity;
+    private bool _isAiming = false;
+    private GameObject _warningEffect;
+    private Vector3 _currentVelocity;
+    private Vector3 _targetPosition;
 
     private void Start()
     {
@@ -20,69 +21,73 @@ public class Gunner_grenade : MonoBehaviour
             trajectoryRenderer = GameObject.Find("GrenadeTrajectory")?.GetComponent<LineRenderer>();
         }
     }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            isAiming = !isAiming;
-
-            if (isAiming)
-            {
-                warningEffect = EffectPool.Instance.GetEffect("Warning");
-            }
-            else
-            {
-                if (warningEffect != null)
-                {
-                    EffectPool.Instance.ReturnEffect("Warning", warningEffect);
-                    warningEffect = null;
-                }
-
-                trajectoryRenderer.positionCount = 0;
-                arrowIndicator.SetActive(false);
-            }
-        }
-
-        if (isAiming)
+        if (_isAiming)
         {
             UpdateAiming();
 
             if (Input.GetMouseButtonDown(0))
             {
-                Vector3 targetPos = warningEffect.transform.position;
-                ThrowGrenade(targetPos);
-                EffectPool.Instance.ReturnEffect("Warning", warningEffect);
-                warningEffect = null;
-                isAiming = false;
+                // 수류탄 발사 시도 (보유 수 확인 포함)
+                GetComponent<GrenadeSkill>()?.TryUseGrenade();
             }
         }
     }
+    public void ToggleAimingFromSkill()
+    {
+        int currentCount = GetComponent<GrenadeSkill>()?.GetCurrentCount() ?? 0;
+        if (currentCount <= 0)
+        {
+            Debug.Log("❌ 수류탄이 없어서 조준 모드에 진입하지 않습니다.");
+            return;
+        }
+
+        ToggleAiming(); // 기존 조준 진입
+    }
+    private void ToggleAiming()
+    {
+        _isAiming = !_isAiming;
+
+        if (_isAiming)
+        {
+            _warningEffect = EffectPool.Instance.GetEffect("Warning");
+        }
+        else
+        {
+            if (_warningEffect != null)
+            {
+                EffectPool.Instance.ReturnEffect("Warning", _warningEffect);
+                _warningEffect = null;
+            }
+
+            trajectoryRenderer.positionCount = 0;
+            arrowIndicator.SetActive(false);
+        }
+    }
+
     private void UpdateAiming()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f, groundLayer))
         {
             Vector3 targetPos = hit.point + Vector3.up * 0.1f;
-            warningEffect.transform.position = hit.point + Vector3.up * 0.1f;
-            warningEffect.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            _warningEffect.transform.position = targetPos;
+            _warningEffect.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
-            currentVelocity = CalculateParabolaVelocity(firePoint.position, targetPos, 1.0f);
-            DrawTrajectory(firePoint.position, currentVelocity);
-        }
-        else
-        {
-            Debug.LogWarning("���� ��ġ ���� ����: ������ �������� ����");
+            _currentVelocity = CalculateParabolaVelocity(firePoint.position, targetPos, 1.0f);
+            DrawTrajectory(firePoint.position, _currentVelocity);
         }
     }
+
     private void DrawTrajectory(Vector3 startPos, Vector3 velocity)
     {
         Vector3[] points = new Vector3[segmentCount];
-
         for (int i = 0; i < segmentCount; i++)
         {
             float t = i * 0.1f;
-            Vector3 point = startPos + velocity * t + 0.5f * Physics.gravity * t * t;
-            points[i] = point;
+            points[i] = startPos + velocity * t + 0.5f * Physics.gravity * t * t;
         }
 
         trajectoryRenderer.positionCount = segmentCount;
@@ -96,29 +101,42 @@ public class Gunner_grenade : MonoBehaviour
         arrowIndicator.SetActive(true);
     }
 
-    private void ThrowGrenade(Vector3 targetPosition)// ������ ������ ����Ͽ� ����ź�� ������ �Լ�
+    // 외부에서 호출되는 수류탄 던지기 메서드
+    public void ThrowWithCurrentVelocity()
     {
-        GameObject grenade = GrenadePool.Instance.GetGrenade(); // �� Ǯ���� ������
+        GameObject grenade = GrenadePool.Instance.GetGrenade();
         grenade.transform.position = firePoint.position;
         grenade.transform.rotation = Quaternion.identity;
 
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.linearVelocity = currentVelocity;
+        rb.linearVelocity = _currentVelocity;
+
+        float damage = GetComponent<GrenadeSkill>()?.GetGrenadeDamage() ?? 0f;
+        grenade.GetComponent<GrenadeExplode>()?.SetDamage(damage);
 
         trajectoryRenderer.positionCount = 0;
         arrowIndicator.SetActive(false);
+
+        if (_warningEffect != null)
+        {
+            EffectPool.Instance.ReturnEffect("Warning", _warningEffect);
+            _warningEffect = null;
+        }
+
+        _isAiming = false;
     }
 
     private Vector3 CalculateParabolaVelocity(Vector3 start, Vector3 end, float timeToTarget)
     {
-        Vector3 distance = end - start;// �������� ���� ������ �Ÿ� v = d / t
-        Vector3 distanceXZ = new Vector3(distance.x, 0f, distance.z);//��ӵ� � ���� y = v?��t + (1/2)��a��t��
+        Vector3 distance = end - start;
+        Vector3 distanceXZ = new Vector3(distance.x, 0f, distance.z);
         float yOffset = distance.y;
+
         float verticalSpeed = yOffset / timeToTarget + 0.5f * Mathf.Abs(Physics.gravity.y) * timeToTarget;
         Vector3 horizontalSpeed = distanceXZ / timeToTarget;
 
-        return horizontalSpeed + Vector3.up * verticalSpeed;//���� + ���� ���͸� ���ļ� ��ȯ.
+        return horizontalSpeed + Vector3.up * verticalSpeed;
     }
 }

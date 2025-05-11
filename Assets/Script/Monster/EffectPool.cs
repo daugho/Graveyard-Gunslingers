@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EffectPool : MonoBehaviour
@@ -45,6 +46,7 @@ public class EffectPool : MonoBehaviour
         {
             var obj = _effectPools[key].Dequeue();
             obj.SetActive(true);
+
             return obj;
         }
         else
@@ -53,13 +55,42 @@ public class EffectPool : MonoBehaviour
             return null;
         }
     }
+    public GameObject GetEffectExploEffect(string key)
+    {
+        if (!_effectPools.ContainsKey(key))
+        {
+            Debug.LogWarning($"[EffectPool] (Explosive) '{key}' 키를 찾을 수 없음");
+            return null;
+        }
 
+        if (_effectPools[key].Count > 0)
+        {
+            var obj = _effectPools[key].Dequeue();
+            return obj; // ? SetActive 하지 않음
+        }
+        else
+        {
+            Debug.LogWarning($"[EffectPool] (Explosive) '{key}' 풀에 남은 오브젝트가 없음");
+            return null;
+        }
+    }
     public void ReturnEffect(string key, GameObject obj)
     {
-        obj.SetActive(false);
+        if (obj == null)
+        {
+            Debug.LogWarning($"[EffectPool] 반환하려는 '{key}' 이펙트가 이미 파괴됨(null)");
+            return;
+        }
+
         if (_effectPools.ContainsKey(key))
+        {
+            if (obj != null) obj.SetActive(false);
             _effectPools[key].Enqueue(obj);
+        }
         else
-            Destroy(obj);
+        {
+            //Debug.LogWarning($"[EffectPool] '{key}' 키가 풀에 없음. Destroy 수행");
+            //if (obj != null) Destroy(obj);
+        }
     }
 }

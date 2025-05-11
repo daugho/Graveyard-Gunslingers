@@ -106,6 +106,7 @@ public class MonsterPoolManager : MonoBehaviour
         }
 
         GameObject monster = poolDictionary[poolKey].Dequeue();
+        monster.layer = LayerMask.NameToLayer("Monster");
         monster.transform.position = position;
         monster.transform.rotation = rotation;
         monster.SetActive(true);

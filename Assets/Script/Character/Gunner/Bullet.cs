@@ -24,30 +24,14 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("DeadMonster"))
             return;
 
-        // 몬스터 또는 대상 충돌 처리
         IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
         if (damageable != null)
-            { damageable.TakeDamage(_damage);
-            Debug.Log($"[Bullet] {collision.gameObject.name}에게 데미지 {_damage} 전달");
+        {
+            damageable.TakeDamage(_damage); // 💥 여기서 몬스터가 텍스트 출력
         }
 
         ReturnToPool();
-        //if (collision.gameObject.CompareTag("Monster"))
-        //{
-        //    Monster monster = collision.gameObject.GetComponent<Monster>();
-        //    if (monster != null)
-        //    {
-        //        IDamageable damageable = monster as IDamageable;
-        //        if (damageable != null)
-        //        {
-        //            damageable.TakeDamage(_damage); // ⭐️ 몬스터 종류 상관없이 데미지 전달
-        //        }
-        //    }
-        //}
-        //
-        //ReturnToPool();
     }
-
     public void SetDamage(float damage) // ⭐️ 외부에서 데미지 설정
     {
         _damage = damage;

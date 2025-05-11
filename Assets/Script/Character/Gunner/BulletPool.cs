@@ -21,19 +21,18 @@ public class BulletPool : MonoBehaviour
             _pool.Enqueue(bullet);
         }
     }
-
     public GameObject GetBullet()
     {
-        if (_pool.Count > 0)
-        {
+        
+       
             GameObject bullet = _pool.Dequeue();
             bullet.SetActive(true);
             return bullet;
-        }
+        
 
         // 풀 크기 초과 시 예외 처리 또는 추가 생성
-        GameObject extraBullet = Instantiate(bulletPrefab);
-        return extraBullet;
+        //GameObject extraBullet = Instantiate(bulletPrefab);
+        //return extraBullet;
     }
 
     public void ReturnBullet(GameObject bullet)

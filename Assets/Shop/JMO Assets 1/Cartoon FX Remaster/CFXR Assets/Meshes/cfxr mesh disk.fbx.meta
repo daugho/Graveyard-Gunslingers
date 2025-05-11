@@ -97,8 +97,9 @@ ModelImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 23634
-  packageName: Cartoon FX 4 Remaster
+  productId: 109565
+  packageName: Cartoon FX Remaster Free
   packageVersion: R 1.4.2
-  assetPath: Assets/JMO Assets/Cartoon FX Remaster/CFXR Assets/Meshes/cfxr mesh disk.fbx
-  uploadId: 717885
+  assetPath: Assets/Shop/JMO Assets 1/Cartoon FX Remaster/CFXR Assets/Meshes/cfxr
+    mesh disk.fbx
+  uploadId: 717883

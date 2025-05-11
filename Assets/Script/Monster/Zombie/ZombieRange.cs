@@ -37,7 +37,15 @@ public class ZombieRange : Monster
             Move();
         }
     }
-
+    private void OnEnable()
+    {
+        ResetState();
+    }
+    private void ResetState()
+    {
+        // 스탯 초기화
+        LoadMonsterStats(); // 체력 포함된 새로운 Stat 인스턴스 재설정
+    }
     protected override void LoadMonsterStats()
     {
         _monsterType = MonsterType.Zombie;
@@ -49,14 +57,9 @@ public class ZombieRange : Monster
             _stats = new StatManager.MonsterStats(data);
             _monsterName = data.Name;
             _attackRange = data.Range;
-            //Debug.Log($"[Zombie2] 스탯 로드 완료: {_monsterName}, 데미지 {_stats.GetDamage()}, 이동속도 {_stats.GetMoveSpeed()}");
-        }
-        else
-        {
-           // Debug.LogError("[Zombie2] 스탯 로드 실패");
+
         }
     }
-
     protected override void Move()
     {
         if (_target == null)

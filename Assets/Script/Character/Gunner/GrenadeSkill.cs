@@ -2,75 +2,68 @@ using UnityEngine;
 
 public class GrenadeSkill : MonoBehaviour
 {
-    [SerializeField] private float explosionRadius = 3f;
-    [SerializeField] private float explosionForce = 5000f;
-    [SerializeField] private LayerMask damageLayer;
+    private float _lastUseTime = -999f;
+    private int _currentGrenadeCount;
+    private float _cooldown;
+    private int _maxGrenade;
+    private float _regenTimer;
+    private float _grenadeDamage;
 
-    private bool _hasExploded = false;
-    private float _damage = 100f;
-    private GameObject _explosionEffectObject;
-    private const float _explosionEffectLifetime = 1.0f;
-    private void OnEnable()
+    public float GetGrenadeDamage() => _grenadeDamage;
+    private void Update()
     {
-        _hasExploded = false;
+        SkillData data = SkillManager.Instance.GetPlayerSkill("Grenade");
+        if (data == null) return;
 
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+        _cooldown = data.Cooldown;
+        _maxGrenade = Mathf.FloorToInt(data.Rate);
+
+        if (_currentGrenadeCount < _maxGrenade)
         {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
+            _regenTimer += Time.deltaTime;
+            if (_regenTimer >= _cooldown)
+            {
+                _regenTimer = 0f;
+                _currentGrenadeCount++;
+                Debug.Log($"[Grenade] 수류탄 +1 ▶ {_currentGrenadeCount}/{_maxGrenade}");
+            }
         }
     }
-    private void OnCollisionEnter(Collision collision)
+    public int GetCurrentCount()
     {
-
-        if (collision.collider.CompareTag("Monster") || collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
-        {
-            Explode();
-        }
+        return _currentGrenadeCount;
     }
 
-    private void Explode()
+    public void TryUseGrenade()
     {
-        if (_hasExploded) return;
-        _hasExploded = true;
+        SkillData data = SkillManager.Instance.GetPlayerSkill("Grenade");
+        if (data == null) return;
 
-        // 폭발 이펙트 풀링
-        GameObject explosion = EffectPool.Instance.GetEffect(EffectKeys.Explosion);
-        if (explosion != null)
+        if (_currentGrenadeCount <= 0)
         {
-            explosion.transform.position = transform.position;
-            explosion.transform.rotation = Quaternion.identity;
-            _explosionEffectObject = explosion;
-
-            // 1.5초 후 Return
-            Invoke(nameof(ReturnExplosionEffect), _explosionEffectLifetime);
+            Debug.Log("수류탄이 없습니다.");
+            return;
         }
 
-        // 카메라 흔들림
-        Camera.main.GetComponent<QuarterViewCamera>()?.TriggerShake();
+        _currentGrenadeCount--;
+        _lastUseTime = Time.time;
 
-        // 데미지 및 폭발 처리
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, damageLayer);
-        foreach (var hit in hitColliders)
+        Gunner_grenade thrower = GetComponent<Gunner_grenade>();
+        if (thrower != null)
         {
-            if (hit.TryGetComponent<Monster>(out var monster))
-                monster.TakeDamage(_damage);
-
-            if (hit.attachedRigidbody != null)
-                hit.attachedRigidbody.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            thrower.ThrowWithCurrentVelocity();
         }
 
-        // 수류탄을 풀로 반환 (SetActive(false))
-        GrenadePool.Instance.ReturnGrenade(gameObject);
+        Debug.Log($"[Grenade] 사용 ▶ 남은 수류탄: {_currentGrenadeCount}/{_maxGrenade}");
     }
 
-    private void ReturnExplosionEffect()
+    public void LevelUpSkill()
     {
-        if (_explosionEffectObject != null)
-        {
-            EffectPool.Instance.ReturnEffect(EffectKeys.Explosion, _explosionEffectObject);
-            _explosionEffectObject = null;
-        }
+        //SkillManager.Instance.AddOrLevelUpSkill("Grenade");
+        SkillData data = SkillManager.Instance.GetPlayerSkill("Grenade");
+        _maxGrenade = Mathf.FloorToInt(data.Rate);
+        _currentGrenadeCount = _maxGrenade;
+        _grenadeDamage = data.Damage;
+        Debug.Log($"[Grenade] 스킬 해금 또는 레벨업 ▶ 소지 수류탄: {_currentGrenadeCount}/{_maxGrenade}");
     }
 }

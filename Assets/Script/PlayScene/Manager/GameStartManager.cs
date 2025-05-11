@@ -26,6 +26,7 @@ public class GameStartManager : MonoBehaviour
         if (prefab != null)
         {
             GameObject player = Instantiate(prefab, new Vector3(0,0,0) , Quaternion.identity);
+            SkillSlotManager.Instance.SetPlayer(player);
             //GameObject monster = Instantiate(testZombiePrefab, new Vector3(5,0,5) , Quaternion.identity);
 
             QuarterViewCamera cam = Camera.main.GetComponent<QuarterViewCamera>();

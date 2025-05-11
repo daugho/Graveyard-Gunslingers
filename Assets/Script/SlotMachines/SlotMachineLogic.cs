@@ -15,8 +15,8 @@ public class SlotMachineLogic
     protected float endDelay;
 
     protected int[] resultIndexes;
+    public int[] ResultIndexes => resultIndexes;
     protected bool isShuffling;
-
     public void Setup(Image[] slotImages, Sprite[] possibleSprites, int resultCount, int stepCount, float startDelay, float endDelay)
     {
         this.slotImages = slotImages;

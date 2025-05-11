@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4370306923018247900}
-  - component: {fileID: 9147383652186999823}
   - component: {fileID: -8941519781169665726}
   - component: {fileID: -5781459654886740403}
+  - component: {fileID: 1010788281218910295}
   m_Layer: 0
   m_Name: 'M26 [Prefab]'
   m_TagString: Untagged
@@ -39,23 +39,6 @@ Transform:
   - {fileID: 8966006030875993452}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &9147383652186999823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589229958108472953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259e782ea364e9f4fb4cfb254e655603, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionRadius: 3
-  explosionForce: 500
-  damageLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!54 &-8941519781169665726
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -104,6 +87,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.06
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1010788281218910295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589229958108472953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791074b5f53a6f24493e5ffa06f1cd3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionRadius: 3
+  damageLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _explosionEffectLifetime: 1
 --- !u!1 &3369271880888138385
 GameObject:
   m_ObjectHideFlags: 0

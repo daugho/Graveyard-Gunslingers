@@ -6,13 +6,13 @@ public class NormalSlotMachine : MonoBehaviour
     [SerializeField] private Image[] slotImages;
     [SerializeField] private Sprite[] normalSprites;
 
+    [Header("결과 인덱스 → 스킬 이름 매핑")]
+    [SerializeField] private string[] skillNames; // 예: ["관통탄", "수류탄", "이중실린더"]
+
     [Header("애니메이션 설정")]
     [SerializeField] private int stepCount = 20;
     [SerializeField] private float startDelay = 0.05f;
     [SerializeField] private float endDelay = 0.8f;
-
-    [Header("이펙트 연결")]
-    [SerializeField] private GameObject rewardEffect;
 
     private SlotMachineLogic _controller = new SlotMachineLogic();
 
@@ -22,14 +22,15 @@ public class NormalSlotMachine : MonoBehaviour
 
         _controller.OnShuffleComplete = () =>
         {
-            if (rewardEffect != null)
-            {
-                rewardEffect.SetActive(true);
-            }
 
-            Invoke(nameof(DisableSelf), 1.5f); // 1.5초 후 화면 끄기
-            rewardEffect.SetActive(false);
+            int resultIndex = _controller.ResultIndexes[0];
+            string skillName = skillNames[resultIndex];
 
+            SkillManager.Instance.AddOrLevelUpSkill(skillName);
+
+            Debug.Log($"[NormalSlotMachine] 슬롯 결과 → Index: {resultIndex}, SkillName: {skillName}");
+
+            Invoke(nameof(DisableSelf), 1.5f);
         };
     }
 

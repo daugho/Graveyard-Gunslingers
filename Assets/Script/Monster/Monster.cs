@@ -9,7 +9,7 @@ public abstract class Monster : MonoBehaviour, IDamageable
     protected string _monsterName;
     protected int _monsterKey;
     protected MonsterType _monsterType;
-
+    //[SerializeField] private Transform damageTextAnchor;
 
     protected Transform _target;
     protected bool _isChasing = false;
@@ -29,6 +29,18 @@ public abstract class Monster : MonoBehaviour, IDamageable
     protected virtual void Start()
     {
         LoadMonsterStats();
+        //if (damageTextAnchor == null)
+        //{
+        //    Transform found = transform.Find("HitTextPos");
+        //    if (found != null)
+        //    {
+        //        damageTextAnchor = found;
+        //    }
+        //    else
+        //    {
+        //        Debug.LogWarning($"{name}에 HitTextPos가 없습니다. 기본 위치로 출력됩니다.");
+        //    }
+        //}
     }
     protected abstract void LoadMonsterStats();
 
@@ -66,6 +78,11 @@ public abstract class Monster : MonoBehaviour, IDamageable
             {
                 Hp = _stats.GetHealth() - damage
             });
+    //    Vector3 spawnPos = damageTextAnchor != null
+    //? damageTextAnchor.position
+    //: transform.position + Vector3.up * 1.5f;
+    //
+    //    DamageTextManager.Instance.Show(damage, spawnPos, DamageType.Normal);
         if (_stats.GetHealth() <= 0)
         {
             OnDieAnimation();
@@ -77,9 +94,10 @@ public abstract class Monster : MonoBehaviour, IDamageable
         StopAllCoroutines();     // 모든 코루틴 종료
         RoundManager.Instance.OnMonsterDie();
         gameObject.layer = LayerMask.NameToLayer("DeadMonster");
-        MonsterPoolManager.Instance.ReturnMonster(_monsterType, _monsterKey, gameObject);
         DropItem();
         DropExp();
+        MonsterPoolManager.Instance.ReturnMonster(_monsterType, _monsterKey, gameObject);
+
     }
     protected virtual void OnDieAnimation()
     {
