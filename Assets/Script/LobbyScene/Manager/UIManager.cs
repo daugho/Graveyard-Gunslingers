@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 
     public GameObject _lobbyUI;
     public GameObject _selectUI;
+    public GameObject _titleUI;
     //public GameObject _playUI;
 
     private void Awake()
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
     {
         _lobbyUI.SetActive(false);
         _selectUI.SetActive(true);
+        _titleUI.SetActive(false);
         //_playUI.SetActive(false);
     }
 

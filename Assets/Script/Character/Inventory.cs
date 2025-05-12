@@ -5,6 +5,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory Instance;
 
+    private const string GOLD_KEY = "PlayerGold";
     private int goldAmount = 0;
     private Dictionary<ItemGrade, int> boxCount = new();
 
@@ -20,6 +21,7 @@ public class Inventory : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
         GoldUI.Instance?.UpdateGold(goldAmount);
@@ -27,6 +29,10 @@ public class Inventory : MonoBehaviour
 
     private void Initialize()
     {
+        // °ñµå ·Îµå
+        goldAmount = PlayerPrefs.GetInt(GOLD_KEY, 0);
+
+        // ¹Ú½º ÃÊ±âÈ­
         foreach (ItemGrade grade in System.Enum.GetValues(typeof(ItemGrade)))
             boxCount[grade] = 0;
     }
@@ -34,10 +40,14 @@ public class Inventory : MonoBehaviour
     public void AddGold(int amount)
     {
         goldAmount += amount;
-        Debug.Log($"[Inventory] °ñµå +{amount} ¡æ ÃÑÇÕ: {goldAmount}");
+        PlayerPrefs.SetInt(GOLD_KEY, goldAmount);
+        PlayerPrefs.Save();
+
 
         GoldUI.Instance?.UpdateGold(goldAmount);
     }
+
+    public int GetGold() => goldAmount;
 
     public void AddBox(ItemGrade grade, int count = 1)
     {
@@ -45,12 +55,9 @@ public class Inventory : MonoBehaviour
             boxCount[grade] = 0;
 
         boxCount[grade] += count;
-        Debug.Log($"[Inventory] ¹Ú½º È¹µæ: {grade} x{count} ¡æ ÃÑ: {boxCount[grade]}");
 
         BoxUIController.Instance?.UpdateBoxUI();
     }
-
-    public int GetGold() => goldAmount;
 
     public int GetBoxCount(ItemGrade grade) => boxCount.TryGetValue(grade, out int count) ? count : 0;
 }

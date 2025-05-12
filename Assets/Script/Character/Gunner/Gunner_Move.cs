@@ -2,8 +2,8 @@
 
 public class Gunner_Move : MonoBehaviour
 {
-    float _playerbaseMoveSpeed = 6.0f;
-    float _playerRotateSpeed = 12.0f;
+    float _playerbaseMoveSpeed = 2.0f;
+    float _playerRotateSpeed = 15.0f;
     private bool _isAiming = false;
     public bool IsAiming => _isAiming;
     [SerializeField] private LayerMask groundLayer;
